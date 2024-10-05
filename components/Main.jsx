@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
 import { getLastestGames } from "../lib/metacritic";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { GameCard } from "./GameCard";
+import { AnimatedGameCard } from "./GameCard";
 import { Logo } from "./Logo";
 
 export default function Main() {
@@ -34,7 +34,9 @@ export default function Main() {
           //keyExtractor={(game) => game.slug}
           keyExtractor={({ slug }) => slug}
           //renderItem={(game) => <GameCard game={game.item} />}
-          renderItem={({ item }) => <GameCard game={item} />}
+          renderItem={({ item, index }) => (
+            <AnimatedGameCard game={item} index={index} />
+          )}
         />
       )}
     </View>
