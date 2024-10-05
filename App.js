@@ -1,90 +1,73 @@
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Image,
-  Button,
-  TouchableHighlight,
-  SafeAreaView,
-  Pressable,
+  SafeAreaView
 } from "react-native";
+import { getLastestGames } from "./lib/metacritic";
 
 export default function App() {
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {getLastestGames().then(games => setGames(games))}, []);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text>Open up App.js to start working on your app!</Text>
+      <View style={styles.container}>
         <StatusBar style="light" />
-        <Image
-          source={{
-            uri: "https://www.metacritic.com/a/img/catalog/provider/6/3/6-1-4763-13.jpg",
-          }}
-          style={{
-            width: 215,
-            height: 294,
-          }}
-          fadeDuration={3000}
-        />
-      </View>
+        <SafeAreaView style={{marginTop: 30}}>
 
-      <View>
-        <Text style={styles.title}>
-          The title and onPress handler are required. It is recommended to set
-          accessibilityLabel to help make your app usable by everyone.
-        </Text>
-        <Button
-          title="Press me"
-          onPress={() => alert("Simple Button pressed")}
-        />
-      </View>
+          <ScrollView>
+            {games.map(game => (
+              <View key={game.slug} style={styles.card}>
+                <Image
+                  source={{uri: game.image}}
+                  style={styles.image}
+                />
+                <Text style={styles.title}>{game.title}</Text>
+                <Text style={styles.score}>{game.score}</Text>
+                <Text style={styles.description}>{game.description}</Text>
+              </View>
+              ))}
+          </ScrollView>
 
-      <View>
-        <TouchableHighlight
-          underlayColor="lightblue"
-          onPress={() => alert("Chau!!")}
-          style={{
-            backgroundColor: "red",
-            width: 200,
-            height: 200,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 100,
-          }}
-        >
-          <Text>Touch Here!</Text>
-        </TouchableHighlight>
+        </SafeAreaView>
       </View>
-
-      <View>
-        <Pressable
-          underlayColor="lightblue"
-          onPress={() => alert("Buuuu!!")}
-          style={({ pressed }) => ({
-            backgroundColor: pressed ? "red" : "blue",
-          })}
-        >
-          {({ pressed }) => (
-            <Text
-              style={{
-                color: pressed ? "yellow" : "white",
-              }}
-            >
-              {pressed ? "Pressed!" : "Press me"}
-            </Text>
-          )}
-        </Pressable>
-      </View>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "lightcyan",
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 10,
   },
+  card: {
+    marginBottom: 42
+  },
+  image: {
+    width: 107,
+    height: 147,
+    borderRadius: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 10,
+    color: "white"
+  },
+  description: {
+    fontSize: 16,
+    color: "#eee"
+  },
+  score: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "green",
+    marginBottom: 10
+  }
 });
