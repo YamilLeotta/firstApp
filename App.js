@@ -6,9 +6,9 @@ import {
   View,
   ScrollView,
   Image,
-  SafeAreaView
 } from "react-native";
 import { getLastestGames } from "./lib/metacritic";
+import Constants from "expo-constants";
 
 export default function App() {
   const [games, setGames] = useState([]);
@@ -18,7 +18,6 @@ export default function App() {
   return (
       <View style={styles.container}>
         <StatusBar style="light" />
-        <SafeAreaView style={{marginTop: 30}}>
 
           <ScrollView>
             {games.map(game => (
@@ -34,7 +33,6 @@ export default function App() {
               ))}
           </ScrollView>
 
-        </SafeAreaView>
       </View>
   );
 }
@@ -45,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: Constants.statusBarHeight
   },
   card: {
     marginBottom: 42
