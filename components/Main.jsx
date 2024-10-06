@@ -24,17 +24,19 @@ export function Main() {
         paddingRight: insets.right,
       }}
     >
-      <View style={{ padding: 10 }}>
-        <Logo />
-      </View>
+      <View className="flex-row justify-between mb-4 mx-2">
+        <View>
+          <Logo />
+        </View>
 
-      <Link asChild href="/about">
-        <Pressable>
-          {({ pressed }) => (
-            <AboutIcon size={48} style={{ opacity: pressed ? 0.5 : 1 }} />
-          )}
-        </Pressable>
-      </Link>
+        <Link asChild href="/about">
+          <Pressable>
+            {({ pressed }) => (
+              <AboutIcon size={36} style={{ opacity: pressed ? 0.5 : 1 }} />
+            )}
+          </Pressable>
+        </Link>
+      </View>
 
       {games.length === 0 ? (
         <ActivityIndicator color="#fff" size="large" />
