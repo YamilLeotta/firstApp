@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "expo-router";
-import { View, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList, ActivityIndicator, Pressable } from "react-native";
 import { getLatestGames } from "../lib/metacritic";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedGameCard } from "./GameCard";
 import { Logo } from "./Logo";
+import { AboutIcon } from "./Icons";
 
 export function Main() {
   const [games, setGames] = useState([]);
@@ -27,8 +28,12 @@ export function Main() {
         <Logo />
       </View>
 
-      <Link href="/about" className="text-blue-400 text-xl">
-        About
+      <Link asChild href="/about">
+        <Pressable>
+          {({ pressed }) => (
+            <AboutIcon size={48} style={{ opacity: pressed ? 0.5 : 1 }} />
+          )}
+        </Pressable>
       </Link>
 
       {games.length === 0 ? (
