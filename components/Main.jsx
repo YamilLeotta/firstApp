@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
-import { getLastestGames } from "../lib/metacritic";
+import { getLatestGames } from "../lib/metacritic";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedGameCard } from "./GameCard";
 import { Logo } from "./Logo";
@@ -10,7 +10,7 @@ export default function Main() {
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    getLastestGames().then((games) => setGames(games));
+    getLatestGames().then((games) => setGames(games));
   }, []);
 
   return (
